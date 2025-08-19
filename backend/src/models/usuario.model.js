@@ -3,25 +3,23 @@ const sequelize = require('../config/database');
 
 const Usuario = sequelize.define('Usuario', {
   nombre: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: false
   },
   email: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.STRING,
     unique: true,
-    allowNull: false,
+    allowNull: false
   },
   password: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  creado_en: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    type: DataTypes.STRING,
+    allowNull: false
   }
 }, {
   tableName: 'usuarios',
-  timestamps: false,
+  timestamps: true,
+  createdAt: 'creado_en',
+  updatedAt: false
 });
 
 module.exports = Usuario;

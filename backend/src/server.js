@@ -8,13 +8,19 @@ const Usuario = require('./models/usuario.model');
 const Cliente = require('./models/cliente.model');
 const Tarea = require('./models/tarea.model');
 
+// Importar rutas
+const authRoutes = require('./routes/authRoutes'); // 👈 NUEVO
+
 const app = express();
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Ruta de prueba
+// Rutas
+app.use('/api/usuarios', authRoutes); // 👈 Ruta base para /registro y /login
+
+// Ruta raíz de prueba
 app.get('/', (req, res) => {
   res.send('API Freelancers funcionando ✅');
 });
@@ -28,7 +34,7 @@ sequelize.authenticate()
     console.log('✅ Conexión a MySQL exitosa con Sequelize');
 
     // Crear tablas si no existen (sin borrar datos)
-    return sequelize.sync(); // ⚠️ Usa { force: true } para reiniciar (dev only)
+    return sequelize.sync(); // ⚠️ Usa { force: true } si necesitas reiniciar en dev
   })
   .then(() => {
     app.listen(PORT, () => {
