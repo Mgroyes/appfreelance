@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
+  imports: [CommonModule, RouterModule],
   template: `
     <nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
       <h1 class="text-xl font-bold">App Freelancers</h1>
@@ -11,6 +14,7 @@ import { Component } from '@angular/core';
         <li><a routerLink="/login" routerLinkActive="underline">Logout</a></li>
       </ul>
     </nav>
-  `
+  `,
+  styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {}
+export default class NavbarComponent {}
