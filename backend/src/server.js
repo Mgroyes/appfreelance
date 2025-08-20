@@ -9,16 +9,16 @@ const Cliente = require('./models/cliente.model');
 const Tarea = require('./models/tarea.model');
 
 // Importar rutas
-const authRoutes = require('./routes/authRoutes'); // 👈 NUEVO
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors()); // ✅ Permite conexiones entre frontend y backend
 app.use(express.json());
 
 // Rutas
-app.use('/api/usuarios', authRoutes); // 👈 Ruta base para /registro y /login
+app.use('/api/usuarios', authRoutes);
 
 // Ruta raíz de prueba
 app.get('/', (req, res) => {
@@ -32,9 +32,7 @@ const PORT = process.env.PORT || 3000;
 sequelize.authenticate()
   .then(() => {
     console.log('✅ Conexión a MySQL exitosa con Sequelize');
-
-    // Crear tablas si no existen (sin borrar datos)
-    return sequelize.sync(); // ⚠️ Usa { force: true } si necesitas reiniciar en dev
+    return sequelize.sync(); // Crear tablas si no existen
   })
   .then(() => {
     app.listen(PORT, () => {

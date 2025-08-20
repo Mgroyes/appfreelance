@@ -1,6 +1,7 @@
 import { inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment'; // ✅ CORRECTO
 
 export class AuthService {
   private http = inject(HttpClient);
@@ -11,7 +12,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     this.cargando.set(true);
-    this.http.post('/api/usuarios/login', { email, password })
+    this.http.post(`${environment.apiUrl}/usuarios/login`, { email, password })
       .subscribe({
         next: (res: any) => {
           localStorage.setItem('token', res.token);
@@ -24,7 +25,7 @@ export class AuthService {
   }
 
   registrar(nombre: string, email: string, password: string) {
-    this.http.post('/api/usuarios/registro', { nombre, email, password })
+    this.http.post(`${environment.apiUrl}/usuarios/registro`, { nombre, email, password })
       .subscribe({
         next: () => {
           alert('Usuario registrado. Puedes iniciar sesión.');
