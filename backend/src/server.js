@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const sequelize = require('./config/database');
+const clienteRoutes = require('./routes/clienteRoutes');
+
 
 // Importar modelos (esto también configura las relaciones)
 const Usuario = require('./models/usuario.model');
@@ -19,6 +21,7 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/usuarios', authRoutes);
+app.use('/api/clientes', clienteRoutes);
 
 // Ruta raíz de prueba
 app.get('/', (req, res) => {
