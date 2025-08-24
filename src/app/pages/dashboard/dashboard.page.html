@@ -1,1 +1,9 @@
-<p>dashboard works!</p>
+<section class="p-8">
+  <h1 class="text-2xl font-bold mb-4">Clientes</h1>
+
+  <app-cliente-form
+    [cliente]="clienteSeleccionado"
+    (guardar)="guardarCliente($event)"
+    (cancelar)="cancelarEdicion()"
+  ></app-cliente-form>
+</section>
