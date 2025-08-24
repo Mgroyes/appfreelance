@@ -1,9 +1,48 @@
 <section class="p-8">
   <h1 class="text-2xl font-bold mb-4">Clientes</h1>
 
+  <button *ngIf="!clientes().length" (click)="nuevoCliente()" class="bg-green-600 text-white px-4 py-2 rounded mb-4">
+    Aún no tienes clientes. Crear uno
+  </button>
+
+  <button *ngIf="clientes().length && !mostrarFormulario()" (click)="nuevoCliente()" class="bg-green-600 text-white px-4 py-2 rounded mb-4">
+    + Nuevo Cliente
+  </button>
+
   <app-cliente-form
+    *ngIf="mostrarFormulario()"
     [cliente]="clienteSeleccionado"
     (guardar)="guardarCliente($event)"
     (cancelar)="cancelarEdicion()"
   ></app-cliente-form>
+
+  <table *ngIf="clientes().length && !mostrarFormulario()" class="w-full border mt-6">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="p-2">Nombre</th>
+        <th class="p-2">Empresa</th>
+        <th class="p-2">Email</th>
+        <th class="p-2">Teléfono</th>
+        <th class="p-2">Estado</th>
+        <th class="p-2">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes()" class="border-t">
+        <td class="p-2">{{ cliente.nombre }}</td>
+        <td class="p-2">{{ cliente.empresa }}</td>
+        <td class="p-2">{{ cliente.email }}</td>
+        <td class="p-2">{{ cliente.telefono }}</td>
+        <td class="p-2">{{ cliente.estado }}</td>
+        <td class="p-2 space-x-2">
+          <button (click)="editarCliente(cliente)" class="bg-blue-500 text-white px-2 py-1 rounded">Editar</button>
+          <button (click)="eliminarCliente(cliente.id)" class="bg-red-600 text-white px-2 py-1 rounded">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!clientes().length && !mostrarFormulario()" class="text-gray-600 mt-4">
+    No hay clientes registrados todavía.
+  </p>
 </section>

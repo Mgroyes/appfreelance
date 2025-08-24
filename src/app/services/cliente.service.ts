@@ -1,30 +1,26 @@
-// app-freelancers/src/app/services/cliente.service.ts
-import { inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
+@Injectable({ providedIn: 'root' })
 export class ClienteService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/clientes`;
 
-  private getHeaders() {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({ Authorization: `Bearer ${token}` });
+  obtenerClientes(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  obtenerClientes() {
-    return this.http.get(this.apiUrl, { headers: this.getHeaders() });
+  crearCliente(cliente: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, cliente);
   }
 
-  crearCliente(cliente: any) {
-    return this.http.post(this.apiUrl, cliente, { headers: this.getHeaders() });
+  actualizarCliente(id: number, cliente: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, cliente);
   }
 
-  actualizarCliente(id: number, cliente: any) {
-    return this.http.put(`${this.apiUrl}/${id}`, cliente, { headers: this.getHeaders() });
-  }
-
-  eliminarCliente(id: number) {
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  eliminarCliente(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }

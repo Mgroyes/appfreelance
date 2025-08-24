@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import ClienteFormComponent from '../../components/cliente-form/cliente-form/cliente-form.component';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,8 +10,10 @@ import ClienteFormComponent from '../../components/cliente-form/cliente-form/cli
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.css']
 })
-export default class DashboardPage {
-  // ✅ Signal que se pasa al cliente-form
+export default class DashboardPage implements OnInit {
+  private clienteService = inject(ClienteService);
+
+  clientes = signal<any[]>([]);
   clienteSeleccionado = signal({
     nombre: '',
     empresa: '',
@@ -18,21 +21,66 @@ export default class DashboardPage {
     telefono: '',
     estado: ''
   });
+  mostrarFormulario = signal(false);
 
-  guardarCliente(cliente: any) {
-    console.log('📝 Guardar cliente:', cliente);
-    // Aquí podrías hacer POST o PUT al backend
+  ngOnInit() {
+    this.cargarClientes();
   }
 
-  cancelarEdicion() {
-    console.log('⛔ Edición cancelada');
-    // Ejemplo: resetear signal a objeto vacío
+  cargarClientes() {
+    this.clienteService.obtenerClientes().subscribe({
+      next: (data) => this.clientes.set(data),
+      error: () => alert('Error al cargar clientes')
+    });
+  }
+
+  nuevoCliente() {
     this.clienteSeleccionado.set({
       nombre: '',
       empresa: '',
       email: '',
       telefono: '',
-      estado: ''
+      estado: 'activo'
     });
+    this.mostrarFormulario.set(true);
+  }
+
+  guardarCliente(cliente: any) {
+  const esEdicion = !!cliente.id;
+
+  const operacion = esEdicion
+    ? this.clienteService.actualizarCliente(cliente.id, cliente)
+    : this.clienteService.crearCliente(cliente);
+
+  operacion.subscribe({
+    next: () => {
+      alert(esEdicion ? 'Cliente actualizado correctamente' : 'Cliente registrado correctamente');
+      this.mostrarFormulario.set(false);
+      this.cargarClientes();
+    },
+    error: () => {
+      alert(esEdicion ? 'Error al actualizar el cliente' : 'Error al registrar el cliente');
+    }
+  });
+}
+
+
+  editarCliente(cliente: any) {
+    this.clienteSeleccionado.set(cliente);
+    this.mostrarFormulario.set(true);
+  }
+
+  eliminarCliente(id: number) {
+    this.clienteService.eliminarCliente(id).subscribe({
+      next: () => {
+        alert('Cliente eliminado correctamente');
+        this.cargarClientes();
+      },
+      error: () => alert('Error al eliminar cliente')
+    });
+  }
+
+  cancelarEdicion() {
+    this.mostrarFormulario.set(false);
   }
 }
