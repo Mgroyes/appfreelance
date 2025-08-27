@@ -4,27 +4,29 @@ const Cliente = require('./cliente.model');
 
 const Tarea = sequelize.define('Tarea', {
   descripcion: {
-    type: DataTypes.TEXT,
-    allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: false
   },
   fecha: {
-    type: DataTypes.DATEONLY,
-    allowNull: false,
+    type: DataTypes.DATE,
+    allowNull: false
   },
   completado: {
     type: DataTypes.BOOLEAN,
-    defaultValue: false,
+    defaultValue: false
   },
-  creado_en: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+  cliente_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   tableName: 'tareas',
-  timestamps: false,
+  timestamps: true,
+  createdAt: 'creado_en',
+  updatedAt: false
 });
 
-Cliente.hasMany(Tarea, { foreignKey: 'cliente_id' });
 Tarea.belongsTo(Cliente, { foreignKey: 'cliente_id' });
+Cliente.hasMany(Tarea, { foreignKey: 'cliente_id' });
 
 module.exports = Tarea;
