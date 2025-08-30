@@ -2,11 +2,12 @@ import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import ClienteFormComponent from '../../components/cliente-form/cliente-form/cliente-form.component';
 import { ClienteService } from '../../services/cliente.service';
+import { TareasPorClienteComponent } from '../../components/tareas-por-cliente/tareas-por-cliente.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ClienteFormComponent],
+  imports: [CommonModule, ClienteFormComponent, TareasPorClienteComponent],
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.css']
 })
@@ -22,6 +23,9 @@ export default class DashboardPage implements OnInit {
     estado: ''
   });
   mostrarFormulario = signal(false);
+
+  // ✅ Se agregó para manejar la visibilidad de tareas
+  tareasVisibles = signal<number | null>(null);
 
   ngOnInit() {
     this.cargarClientes();
@@ -46,24 +50,23 @@ export default class DashboardPage implements OnInit {
   }
 
   guardarCliente(cliente: any) {
-  const esEdicion = !!cliente.id;
+    const esEdicion = !!cliente.id;
 
-  const operacion = esEdicion
-    ? this.clienteService.actualizarCliente(cliente.id, cliente)
-    : this.clienteService.crearCliente(cliente);
+    const operacion = esEdicion
+      ? this.clienteService.actualizarCliente(cliente.id, cliente)
+      : this.clienteService.crearCliente(cliente);
 
-  operacion.subscribe({
-    next: () => {
-      alert(esEdicion ? 'Cliente actualizado correctamente' : 'Cliente registrado correctamente');
-      this.mostrarFormulario.set(false);
-      this.cargarClientes();
-    },
-    error: () => {
-      alert(esEdicion ? 'Error al actualizar el cliente' : 'Error al registrar el cliente');
-    }
-  });
-}
-
+    operacion.subscribe({
+      next: () => {
+        alert(esEdicion ? 'Cliente actualizado correctamente' : 'Cliente registrado correctamente');
+        this.mostrarFormulario.set(false);
+        this.cargarClientes();
+      },
+      error: () => {
+        alert(esEdicion ? 'Error al actualizar el cliente' : 'Error al registrar el cliente');
+      }
+    });
+  }
 
   editarCliente(cliente: any) {
     this.clienteSeleccionado.set(cliente);
@@ -82,5 +85,12 @@ export default class DashboardPage implements OnInit {
 
   cancelarEdicion() {
     this.mostrarFormulario.set(false);
+  }
+
+  // ✅ Método agregado para toggle de tareas por cliente
+  toggleTareas(clienteId: number) {
+    this.tareasVisibles.set(
+      this.tareasVisibles() === clienteId ? null : clienteId
+    );
   }
 }

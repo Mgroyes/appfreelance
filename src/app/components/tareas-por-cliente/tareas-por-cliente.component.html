@@ -1,0 +1,31 @@
+<div class="border p-4 mt-4">
+  <h2 class="text-lg font-bold mb-2">Tareas</h2>
+
+  <div class="flex gap-4 mb-4">
+    <input
+      type="text"
+      class="border p-2 flex-1"
+      placeholder="Descripción"
+      [(ngModel)]="descripcion"
+    />
+    <input
+      type="date"
+      class="border p-2"
+      [(ngModel)]="fecha"
+    />
+    <button (click)="agregarTarea()" class="bg-green-600 text-white px-4 py-2 rounded">
+      + Añadir
+    </button>
+  </div>
+
+  <ul class="space-y-2">
+    <li *ngFor="let tarea of tareas" class="flex justify-between items-center p-2 bg-gray-100 rounded">
+      <div class="flex items-center gap-2">
+        <input type="checkbox" [checked]="tarea.completado" (change)="toggleCompletado(tarea)" />
+        <span [class.line-through]="tarea.completado">{{ tarea.descripcion }}</span>
+        <span class="text-sm text-gray-500 ml-2">({{ tarea.fecha | date:'shortDate' }})</span>
+      </div>
+      <button (click)="eliminarTarea(tarea.id)" class="text-red-600">Eliminar</button>
+    </li>
+  </ul>
+</div>
