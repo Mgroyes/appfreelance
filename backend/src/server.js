@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const sequelize = require('./config/database');
-const clienteRoutes = require('./routes/clienteRoutes');
-const tareaRoutes = require('./routes/tareaRoutes'); // ✅ Asegúrate de tener esto
 
 // Importar modelos
 const Usuario = require('./models/usuario.model');
@@ -12,6 +10,9 @@ const Tarea = require('./models/tarea.model');
 
 // Importar rutas
 const authRoutes = require('./routes/authRoutes');
+const clienteRoutes = require('./routes/clienteRoutes');
+const tareaRoutes = require('./routes/tareaRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes'); // ✅ NUEVO
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use('/api/usuarios', authRoutes);
 app.use('/api/clientes', clienteRoutes);
 app.use('/api/clientes/:clienteId/tareas', tareaRoutes);
-
+app.use('/api/usuario', usuarioRoutes); // ✅ NUEVA RUTA DE PERFIL
 
 // Ruta de prueba
 app.get('/', (req, res) => {
