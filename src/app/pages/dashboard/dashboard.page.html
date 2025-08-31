@@ -1,70 +1,121 @@
-<section class="p-8">
-  <h1 class="text-2xl font-bold mb-4">Clientes</h1>
+<section class="p-4 sm:p-6 md:p-8">
+  <div class="max-w-7xl mx-auto">
+    <!-- Encabezado -->
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <h1 class="text-3xl font-bold text-gray-800">Clientes</h1>
 
-  <!-- Botón para crear cliente -->
-  <button
-    *ngIf="!clientes().length"
-    (click)="nuevoCliente()"
-    class="bg-green-600 text-white px-4 py-2 rounded mb-4"
-  >
-    Aún no tienes clientes. Crear uno
-  </button>
+      <!-- Botón para crear cliente -->
+      <button
+        *ngIf="clientes().length && !mostrarFormulario()"
+        (click)="nuevoCliente()"
+        class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 4v16m8-8H4" />
+        </svg>
+        Nuevo Cliente
+      </button>
+    </div>
 
-  <button
-    *ngIf="clientes().length && !mostrarFormulario()"
-    (click)="nuevoCliente()"
-    class="bg-green-600 text-white px-4 py-2 rounded mb-4"
-  >
-    + Nuevo Cliente
-  </button>
+    <!-- Card de aviso si no hay clientes -->
+    <div *ngIf="!clientes().length && !mostrarFormulario()" class="bg-white shadow-md rounded-lg p-6 text-center text-gray-600">
+      <p class="mb-4 text-lg">Aún no tienes clientes registrados.</p>
+      <button
+        (click)="nuevoCliente()"
+        class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+      >
+        Crear Cliente
+      </button>
+    </div>
 
-  <!-- Formulario Cliente -->
-  <app-cliente-form
-    *ngIf="mostrarFormulario()"
-    [cliente]="clienteSeleccionado"
-    (guardar)="guardarCliente($event)"
-    (cancelar)="cancelarEdicion()"
-  ></app-cliente-form>
+    <!-- Formulario de cliente -->
+    <app-cliente-form
+      *ngIf="mostrarFormulario()"
+      [cliente]="clienteSeleccionado"
+      (guardar)="guardarCliente($event)"
+      (cancelar)="cancelarEdicion()"
+    ></app-cliente-form>
 
-  <!-- Tabla de clientes -->
-  <table *ngIf="clientes().length && !mostrarFormulario()" class="w-full border mt-6">
-    <thead>
-      <tr class="bg-gray-200">
-        <th class="p-2">Nombre</th>
-        <th class="p-2">Empresa</th>
-        <th class="p-2">Email</th>
-        <th class="p-2">Teléfono</th>
-        <th class="p-2">Estado</th>
-        <th class="p-2">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let cliente of clientes()">
-        <tr class="border-t">
-          <td class="p-2">{{ cliente.nombre }}</td>
-          <td class="p-2">{{ cliente.empresa }}</td>
-          <td class="p-2">{{ cliente.email }}</td>
-          <td class="p-2">{{ cliente.telefono }}</td>
-          <td class="p-2">{{ cliente.estado }}</td>
-          <td class="p-2 space-x-2">
-            <button (click)="editarCliente(cliente)" class="bg-blue-500 text-white px-2 py-1 rounded">Editar</button>
-            <button (click)="eliminarCliente(cliente.id)" class="bg-red-600 text-white px-2 py-1 rounded">Eliminar</button>
-            <button (click)="toggleTareas(cliente.id)" class="bg-purple-500 text-white px-2 py-1 rounded">
-              {{ tareasVisibles() === cliente.id ? 'Ocultar' : 'Ver' }} Tareas
-            </button>
-          </td>
-        </tr>
-        <tr *ngIf="tareasVisibles() === cliente.id">
-          <td colspan="6" class="bg-gray-100 p-4">
-            <app-tareas-por-cliente [clienteId]="cliente.id"></app-tareas-por-cliente>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+    <!-- Tabla de clientes -->
+    <div *ngIf="clientes().length && !mostrarFormulario()" class="mt-6">
+      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-[700px] w-full">
+            <thead class="bg-gray-100 text-gray-700 text-sm">
+              <tr>
+                <th class="p-3 text-left whitespace-nowrap">Nombre</th>
+                <th class="p-3 text-left whitespace-nowrap">Empresa</th>
+                <th class="p-3 text-left whitespace-nowrap">Email</th>
+                <th class="p-3 text-left whitespace-nowrap">Teléfono</th>
+                <th class="p-3 text-left whitespace-nowrap">Estado</th>
+                <th class="p-3 text-left whitespace-nowrap">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let cliente of clientes()">
+                <tr class="border-t hover:bg-gray-50">
+                  <td class="p-3 whitespace-nowrap">{{ cliente.nombre }}</td>
+                  <td class="p-3 whitespace-nowrap">{{ cliente.empresa }}</td>
+                  <td class="p-3 whitespace-nowrap">{{ cliente.email }}</td>
+                  <td class="p-3 whitespace-nowrap">{{ cliente.telefono }}</td>
+                  <td class="p-3 capitalize whitespace-nowrap">{{ cliente.estado }}</td>
+                  <td class="p-3 whitespace-nowrap">
+                    <div class="flex flex-wrap gap-2">
+                      <!-- Botón editar -->
+                      <button
+                        (click)="editarCliente(cliente)"
+                        class="flex items-center gap-2 bg-gray-100 text-green-800 px-3 py-1.5 rounded-md text-sm hover:bg-green-100 transition-colors duration-200"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 5h2m2 0a2 2 0 012 2v0a2 2 0 01-.586 1.414l-7 7a2 2 0 01-1.414.586H7a2 2 0 01-2-2v-1a2 2 0 01.586-1.414l7-7A2 2 0 0115 5z" />
+                        </svg>
+                        Editar
+                      </button>
 
-  <!-- Sin clientes -->
-  <p *ngIf="!clientes().length && !mostrarFormulario()" class="text-gray-600 mt-4">
-    No hay clientes registrados todavía.
-  </p>
+                      <!-- Botón eliminar -->
+                      <button
+                        (click)="eliminarCliente(cliente.id)"
+                        class="flex items-center gap-2 bg-gray-100 text-red-800 px-3 py-1.5 rounded-md text-sm hover:bg-red-100 transition-colors duration-200"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        Eliminar
+                      </button>
+
+                      <!-- Botón ver/ocultar tareas -->
+                      <button
+                        (click)="toggleTareas(cliente.id)"
+                        class="flex items-center gap-2 bg-gray-100 text-purple-800 px-3 py-1.5 rounded-md text-sm hover:bg-purple-100 transition-colors duration-200"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {{ tareasVisibles() === cliente.id ? 'Ocultar' : 'Ver' }} Tareas
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Sección tareas por cliente -->
+                <tr *ngIf="tareasVisibles() === cliente.id">
+                  <td colspan="6" class="bg-gray-50 p-4">
+                    <app-tareas-por-cliente [clienteId]="cliente.id"></app-tareas-por-cliente>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>

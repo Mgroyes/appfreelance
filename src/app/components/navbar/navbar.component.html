@@ -1,10 +1,74 @@
-<nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
-  <h1 class="text-xl font-bold">App Freelancers</h1>
-  <ul class="flex gap-4 items-center">
-    <li><a routerLink="/dashboard" routerLinkActive="underline">Dashboard</a></li>
-    <li><button (click)="togglePerfil()" class="hover:underline">Mi Perfil</button></li>
-    <li><button (click)="logout()" class="hover:underline">Logout</button></li>
-  </ul>
+<nav class="bg-gray-100 text-gray-800 shadow-lg rounded-xl mx-4 my-4 px-4 py-3">
+  <div class="flex items-center justify-between flex-wrap">
+    <!-- Logo y Avatar -->
+    <div class="flex items-center gap-3">
+      <img
+        src="https://i.pravatar.cc/40"
+        alt="Avatar"
+        class="w-10 h-10 rounded-full border border-gray-300 shadow-sm"
+      />
+      <h1 class="text-xl font-semibold">App Freelancers</h1>
+    </div>
+
+    <!-- Botón menú móvil -->
+    <button
+      class="block md:hidden text-gray-700 focus:outline-none"
+      (click)="toggleMenu()"
+    >
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </button>
+
+    <!-- Menú de navegación -->
+    <ul
+      class="w-full md:w-auto md:flex gap-6 items-center mt-4 md:mt-0"
+      [class.hidden]="!menuAbierto()"
+      [class.block]="menuAbierto()"
+      [class.md:flex]="true"
+    >
+      <li class="mt-2 md:mt-0">
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="underline"
+          class="hover:text-blue-600 transition-colors block"
+          (click)="cerrarMenu()"
+        >
+          Dashboard
+        </a>
+      </li>
+      <li class="mt-2 md:mt-0">
+        <button
+          (click)="togglePerfil(); cerrarMenu()"
+          class="hover:text-blue-600 transition-colors block"
+        >
+          Mi Perfil
+        </button>
+      </li>
+      <li class="mt-2 md:mt-0">
+        <button
+          (click)="logout(); cerrarMenu()"
+          class="hover:text-red-600 transition-colors block"
+        >
+          Logout
+        </button>
+      </li>
+    </ul>
+  </div>
 </nav>
 
-<app-perfil-modal [visible]="mostrarPerfil()" (cerrar)="togglePerfil()"></app-perfil-modal>
+<!-- Modal de perfil -->
+<app-perfil-modal
+  [visible]="mostrarPerfil()"
+  (cerrar)="togglePerfil()"
+></app-perfil-modal>
