@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // ✅ Ajusta si tu ruta cambia
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service'; // Ajusta si tu ruta cambia
 
 @Component({
   standalone: true,
@@ -13,7 +13,8 @@ import { AuthService } from '../../services/auth.service'; // ✅ Ajusta si tu r
 })
 export default class RegistroPage {
   private fb = inject(FormBuilder);
-  private authService = inject(AuthService); // ✅ Inyectar el servicio de autenticación
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   form = this.fb.group({
     nombre: ['', Validators.required],
@@ -31,6 +32,16 @@ export default class RegistroPage {
 
     console.log('🟢 Registro data:', { nombre, email, password });
 
-    this.authService.registrar(nombre!, email!, password!); // ✅ Ejecuta el registro real
+    this.authService.registrar(nombre!, email!, password!).subscribe({
+      next: (resp) => {
+        console.log('✅ Registro exitoso', resp);
+        // Redirigir a login después del registro exitoso
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('❌ Error en registro', err);
+        // Aquí puedes mostrar un mensaje de error al usuario si quieres
+      }
+    });
   }
 }
