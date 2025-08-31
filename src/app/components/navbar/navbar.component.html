@@ -1,1 +1,10 @@
-<p>navbar works!</p>
+<nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
+  <h1 class="text-xl font-bold">App Freelancers</h1>
+  <ul class="flex gap-4 items-center">
+    <li><a routerLink="/dashboard" routerLinkActive="underline">Dashboard</a></li>
+    <li><button (click)="togglePerfil()" class="hover:underline">Mi Perfil</button></li>
+    <li><button (click)="logout()" class="hover:underline">Logout</button></li>
+  </ul>
+</nav>
+
+<app-perfil-modal [visible]="mostrarPerfil()" (cerrar)="togglePerfil()"></app-perfil-modal>

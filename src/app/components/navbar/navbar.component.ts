@@ -1,20 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import PerfilModalComponent from '../perfil-modal/perfil-modal.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  template: `
-    <nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
-      <h1 class="text-xl font-bold">App Freelancers</h1>
-      <ul class="flex gap-4">
-        <li><a routerLink="/dashboard" routerLinkActive="underline">Dashboard</a></li>
-        <li><a routerLink="/login" routerLinkActive="underline">Logout</a></li>
-      </ul>
-    </nav>
-  `,
+  imports: [CommonModule, RouterModule, PerfilModalComponent],
+  templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export default class NavbarComponent {}
+export default class NavbarComponent {
+  mostrarPerfil = signal(false);
+
+  togglePerfil() {
+    this.mostrarPerfil.update(val => !val);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  }
+}
