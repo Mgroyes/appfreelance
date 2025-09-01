@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Registro</h1>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-5">
-      <!-- Nombre -->
+      
       <div>
         <input
           type="text"
@@ -17,7 +17,7 @@
         </p>
       </div>
 
-      <!-- Email -->
+      
       <div>
         <input
           type="email"
@@ -31,7 +31,7 @@
         </p>
       </div>
 
-      <!-- Contraseña -->
+      
       <div>
         <input
           type="password"
@@ -45,7 +45,7 @@
         </p>
       </div>
 
-      <!-- Botón -->
+      
       <button
         type="submit"
         class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
@@ -55,7 +55,7 @@
       </button>
     </form>
 
-    <!-- Link -->
+    
     <p class="mt-4 text-sm text-center text-gray-600">
       ¿Ya tienes cuenta?
       <a routerLink="/login" class="text-green-700 hover:underline font-medium">

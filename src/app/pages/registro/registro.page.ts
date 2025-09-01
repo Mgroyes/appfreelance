@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // Ajusta si tu ruta cambia
+import { AuthService } from '../../services/auth.service'; 
 
 @Component({
   standalone: true,
@@ -35,12 +35,12 @@ export default class RegistroPage {
     this.authService.registrar(nombre!, email!, password!).subscribe({
       next: (resp) => {
         console.log('✅ Registro exitoso', resp);
-        // Redirigir a login después del registro exitoso
+        
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('❌ Error en registro', err);
-        // Aquí puedes mostrar un mensaje de error al usuario si quieres
+        
       }
     });
   }

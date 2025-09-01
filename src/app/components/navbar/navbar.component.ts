@@ -11,10 +11,10 @@ import PerfilModalComponent from '../perfil-modal/perfil-modal.component';
   styleUrls: ['./navbar.component.css']
 })
 export default class NavbarComponent {
-  // Signal para mostrar el modal de perfil
+  
   mostrarPerfil = signal(false);
 
-  // Estado del menú responsive
+ 
   menuAbierto = signal(false);
 
   togglePerfil() {

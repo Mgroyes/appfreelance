@@ -1,4 +1,3 @@
-// backend/src/controllers/clienteController.js
 const Cliente = require('../models/cliente.model');
 
 exports.obtenerClientes = async (req, res) => {

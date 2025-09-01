@@ -30,7 +30,7 @@ export default class LoginPage {
     const { email, password } = this.form.value;
     console.log('🟢 Login data:', { email, password });
 
-    // Ahora sí nos suscribimos aquí, no dentro de AuthService
+    
     this.authService.login(email!, password!).subscribe({
       next: (res) => {
         localStorage.setItem('token', res.token);

@@ -87,7 +87,7 @@ export default class DashboardPage implements OnInit {
     this.mostrarFormulario.set(false);
   }
 
-  // ✅ Método agregado para toggle de tareas por cliente
+
   toggleTareas(clienteId: number) {
     this.tareasVisibles.set(
       this.tareasVisibles() === clienteId ? null : clienteId

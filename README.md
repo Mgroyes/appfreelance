@@ -1,27 +1,105 @@
-# AppFreelancers
+# 💼 App Freelancers - Fullstack Angular 17 + Node.js + MySQL
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+Proyecto de gestión de clientes y tareas para freelancers. Desarrollado en 7 días, con arquitectura moderna, componentes standalone, autenticación con JWT, y base de datos relacional.
 
-## Development server
+## 🛠️ Stack Tecnológico
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+| Tecnología        | Uso                          |
+|-------------------|-------------------------------|
+| Angular 17        | Frontend standalone           |
+| Node.js + Express | Backend REST API              |
+| MySQL + Sequelize | Base de datos relacional      |
+| Tailwind CSS      | Estilos utilitarios           |
+| JWT               | Autenticación segura          |
+| Railway / Render  | Hosting backend               |
+| Vercel / Netlify  | Hosting frontend              |
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```yaml
+app-freelancers/
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/         
+│   │   │   ├── pages/              
+│   │   │   ├── services/           
+│   │   │   ├── guards/            
+│   │   │   ├── interceptors/      
+│   │   │   ├── app.routes.ts
+│   │   └── environments/           
+│   └── main.ts
+│
+├── backend/
+│   ├── src/
+│   │   ├── controllers/            
+│   │   ├── models/                 
+│   │   ├── routes/                
+│   │   ├── config/            
+│   │   ├── middleware/            
+│   │   └── server.js
+│   └── .env
+```
+---
 
-## Build
+## ✅ Funcionalidades Implementadas
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 🔐 Autenticación
+- Registro y login usando JWT.
+- Hash de contraseñas con bcrypt.
+- Middleware de autenticación para proteger rutas.
+- Tokens guardados en `localStorage`.
+- Guards de rutas privadas con Angular Signals.
 
-## Running unit tests
+### 👥 Clientes
+- CRUD completo de clientes por usuario.
+- Validaciones en formulario.
+- Interfaz responsive con Tailwind.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 📋 Tareas por Cliente
+- CRUD de tareas asociadas a cada cliente.
+- Estado de completado, validaciones, modal de edición.
+- Relación entre Cliente ↔️ Tareas implementada con Sequelize.
 
-## Running end-to-end tests
+### 👤 Perfil
+- Modal de edición de perfil.
+- Cambio de contraseña con validación.
+- UX profesional: popup dinámico, campos reactivos.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 💅 UI/UX
+- Tailwind CSS para estilos limpios.
+- Heroicons para íconos.
+- Componentes standalone reutilizables.
+- Animaciones suaves y navegación protegida.
 
-## Further help
+---
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+| Método | Endpoint                            | Descripción                 |
+| ------ | ----------------------------------- | --------------------------- |
+| POST   | /api/usuarios/registro              | Registro de usuario         |
+| POST   | /api/usuarios/login                 | Login y generación de JWT   |
+| GET    | /api/clientes                       | Listado de clientes         |
+| POST   | /api/clientes                       | Crear nuevo cliente         |
+| PUT    | /api/clientes/\:id                  | Actualizar cliente          |
+| DELETE | /api/clientes/\:id                  | Eliminar cliente            |
+| GET    | /api/clientes/\:id/tareas           | Listar tareas de un cliente |
+| POST   | /api/clientes/\:id/tareas           | Crear tarea                 |
+| PUT    | /api/clientes/\:id/tareas/\:idTarea | Editar tarea                |
+| DELETE | /api/clientes/\:id/tareas/\:idTarea | Eliminar tarea              |
+| GET    | /api/usuarios/perfil                | Obtener perfil del usuario  |
+| PUT    | /api/usuarios/perfil                | Actualizar nombre/email     |
+| PUT    | /api/usuarios/cambiar-password      | Cambiar contraseña          |
+
+---
+
+🧪 Testing y Calidad
+
+Validaciones de formularios.
+
+Pruebas manuales con Postman.
+
+JWT probado desde frontend y backend.
+
+Componentes desacoplados y reutilizables.
+
+Interceptor HTTP para adjuntar token automáticamente.

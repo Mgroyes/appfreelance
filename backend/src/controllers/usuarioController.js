@@ -1,7 +1,6 @@
 const Usuario = require('../models/usuario.model');
 const bcrypt = require('bcrypt');
 
-// Obtener perfil
 exports.obtenerPerfil = async (req, res) => {
   try {
     const usuario = await Usuario.findByPk(req.usuario.id, {
@@ -13,7 +12,7 @@ exports.obtenerPerfil = async (req, res) => {
   }
 };
 
-// Editar perfil
+
 exports.editarPerfil = async (req, res) => {
   try {
     const usuario = await Usuario.findByPk(req.usuario.id);
@@ -30,7 +29,7 @@ exports.editarPerfil = async (req, res) => {
   }
 };
 
-// Cambiar contraseña
+
 exports.cambiarPassword = async (req, res) => {
   try {
     const usuario = await Usuario.findByPk(req.usuario.id);

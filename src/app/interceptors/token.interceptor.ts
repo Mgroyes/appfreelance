@@ -1,4 +1,3 @@
-// src/app/interceptors/token.interceptor.ts
 import { HttpInterceptorFn, HttpRequest, HttpHandlerFn } from '@angular/common/http';
 
 export const tokenInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {

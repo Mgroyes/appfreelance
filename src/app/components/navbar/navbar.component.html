@@ -1,6 +1,6 @@
 <nav class="bg-gray-100 text-gray-800 shadow-lg rounded-xl mx-4 my-4 px-4 py-3">
   <div class="flex items-center justify-between flex-wrap">
-    <!-- Logo y Avatar -->
+    
     <div class="flex items-center gap-3">
       <img
         src="https://i.pravatar.cc/40"
@@ -10,7 +10,7 @@
       <h1 class="text-xl font-semibold">App Freelancers</h1>
     </div>
 
-    <!-- Botón menú móvil -->
+    
     <button
       class="block md:hidden text-gray-700 focus:outline-none"
       (click)="toggleMenu()"
@@ -30,7 +30,7 @@
       </svg>
     </button>
 
-    <!-- Menú de navegación -->
+   
     <ul
       class="w-full md:w-auto md:flex gap-6 items-center mt-4 md:mt-0"
       [class.hidden]="!menuAbierto()"
@@ -67,7 +67,7 @@
   </div>
 </nav>
 
-<!-- Modal de perfil -->
+
 <app-perfil-modal
   [visible]="mostrarPerfil()"
   (cerrar)="togglePerfil()"

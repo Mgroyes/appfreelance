@@ -1,4 +1,3 @@
-// backend/src/controllers/tareaController.js
 const Tarea = require('../models/tarea.model');
 const Cliente = require('../models/cliente.model');
 

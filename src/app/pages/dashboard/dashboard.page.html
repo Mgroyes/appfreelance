@@ -1,44 +1,34 @@
 <section class="p-4 sm:p-6 md:p-8">
   <div class="max-w-7xl mx-auto">
-    <!-- Encabezado -->
+
     <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
       <h1 class="text-3xl font-bold text-gray-800">Clientes</h1>
 
-      <!-- Botón para crear cliente -->
-      <button
-        *ngIf="clientes().length && !mostrarFormulario()"
-        (click)="nuevoCliente()"
-        class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-          viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 4v16m8-8H4" />
+
+      <button *ngIf="clientes().length && !mostrarFormulario()" (click)="nuevoCliente()"
+        class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
         Nuevo Cliente
       </button>
     </div>
 
-    <!-- Card de aviso si no hay clientes -->
-    <div *ngIf="!clientes().length && !mostrarFormulario()" class="bg-white shadow-md rounded-lg p-6 text-center text-gray-600">
+
+    <div *ngIf="!clientes().length && !mostrarFormulario()"
+      class="bg-white shadow-md rounded-lg p-6 text-center text-gray-600">
       <p class="mb-4 text-lg">Aún no tienes clientes registrados.</p>
-      <button
-        (click)="nuevoCliente()"
-        class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
-      >
+      <button (click)="nuevoCliente()"
+        class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">
         Crear Cliente
       </button>
     </div>
 
-    <!-- Formulario de cliente -->
-    <app-cliente-form
-      *ngIf="mostrarFormulario()"
-      [cliente]="clienteSeleccionado"
-      (guardar)="guardarCliente($event)"
-      (cancelar)="cancelarEdicion()"
-    ></app-cliente-form>
 
-    <!-- Tabla de clientes -->
+    <app-cliente-form *ngIf="mostrarFormulario()" [cliente]="clienteSeleccionado" (guardar)="guardarCliente($event)"
+      (cancelar)="cancelarEdicion()"></app-cliente-form>
+
+
     <div *ngIf="clientes().length && !mostrarFormulario()" class="mt-6">
       <div class="bg-white shadow-lg rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
@@ -63,39 +53,33 @@
                   <td class="p-3 capitalize whitespace-nowrap">{{ cliente.estado }}</td>
                   <td class="p-3 whitespace-nowrap">
                     <div class="flex flex-wrap gap-2">
-                      <!-- Botón editar -->
-                      <button
-                        (click)="editarCliente(cliente)"
-                        class="flex items-center gap-2 bg-gray-100 text-green-800 px-3 py-1.5 rounded-md text-sm hover:bg-green-100 transition-colors duration-200"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                          viewBox="0 0 24 24" stroke="currentColor">
+
+                      <button (click)="editarCliente(cliente)"
+                        class="flex items-center gap-2 bg-gray-100 text-green-800 px-3 py-1.5 rounded-md text-sm hover:bg-green-100 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                          stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M11 5h2m2 0a2 2 0 012 2v0a2 2 0 01-.586 1.414l-7 7a2 2 0 01-1.414.586H7a2 2 0 01-2-2v-1a2 2 0 01.586-1.414l7-7A2 2 0 0115 5z" />
                         </svg>
                         Editar
                       </button>
 
-                      <!-- Botón eliminar -->
-                      <button
-                        (click)="eliminarCliente(cliente.id)"
-                        class="flex items-center gap-2 bg-gray-100 text-red-800 px-3 py-1.5 rounded-md text-sm hover:bg-red-100 transition-colors duration-200"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                          viewBox="0 0 24 24" stroke="currentColor">
+
+                      <button (click)="eliminarCliente(cliente.id)"
+                        class="flex items-center gap-2 bg-gray-100 text-red-800 px-3 py-1.5 rounded-md text-sm hover:bg-red-100 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                          stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
                         </svg>
                         Eliminar
                       </button>
 
-                      <!-- Botón ver/ocultar tareas -->
-                      <button
-                        (click)="toggleTareas(cliente.id)"
-                        class="flex items-center gap-2 bg-gray-100 text-purple-800 px-3 py-1.5 rounded-md text-sm hover:bg-purple-100 transition-colors duration-200"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                          viewBox="0 0 24 24" stroke="currentColor">
+
+                      <button (click)="toggleTareas(cliente.id)"
+                        class="flex items-center gap-2 bg-gray-100 text-purple-800 px-3 py-1.5 rounded-md text-sm hover:bg-purple-100 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                          stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -105,7 +89,7 @@
                   </td>
                 </tr>
 
-                <!-- Sección tareas por cliente -->
+
                 <tr *ngIf="tareasVisibles() === cliente.id">
                   <td colspan="6" class="bg-gray-50 p-4">
                     <app-tareas-por-cliente [clienteId]="cliente.id"></app-tareas-por-cliente>
