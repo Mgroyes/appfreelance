@@ -1,6 +1,6 @@
 # 💼 App Freelancers - Fullstack Angular 17 + Node.js + MySQL
 
-Proyecto de gestión de clientes y tareas para freelancers. Desarrollado en 7 días, con arquitectura moderna, componentes standalone, autenticación con JWT, y base de datos relacional.
+Proyecto de gestión de clientes y tareas para trabajos freelancer. Desarrollado en 7 días, con arquitectura moderna, componentes standalone, autenticación con JWT, y base de datos relacional.
 
 ## 🛠️ Stack Tecnológico
 
